@@ -14,8 +14,8 @@ export default function Login({ onLogin }) {
   const { register, handleSubmit, formState:{errors}} = useForm<SignInInput>({
       resolver: zodResolver(signInSchema),
       defaultValues: {
-        email: "",
-        password: "",
+        email: "rucel@gmail.com",
+        password: "Rucel1234@",
       }
     })
     const onSubmit =(data:SignInInput) => {
@@ -27,7 +27,6 @@ export default function Login({ onLogin }) {
       try {
         const cred = await signInWithEmailAndPassword(auth, email, password);
         const currentUser = cred.user;
-        console.log(currentUser.displayName)
         onLogin(currentUser);
         navigate("/dashboard") 
       }catch (error) {
@@ -43,19 +42,17 @@ export default function Login({ onLogin }) {
     }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="pt-5 mt-6 max-w-[600px] mx-auto h-[600px] flex items-center justify-center flex-col p-2">
+    <form onSubmit={handleSubmit(onSubmit)} className="pt-5 mt-6 max-w-[600px] mx-auto h-[600px] flex items-center justify-center flex-col p-2 rounded-2xl shadow-lg">
         <h1 className="px-6 py-6 text-semibold text-5xl underline uppercase ">Login</h1>
         <div className={`w-full h-8 ${show ? 'badge badge-error' : 'hidden' }`}>Please check Your Email and Password</div>
         <div className="flex items-center justify-center flex-col gap-4 w-full">
-            <input {...register("email")} type="email" placeholder="Entyer your Email" className="input px-4 py-6 w-full m-4 "
-            
+            <input {...register("email")} type="email" placeholder="Enter your Email" className="input px-4 py-6 w-full m-4 focus:text-xl text-lg"
             />
             <div className="h-2">
               {errors.email && <p style={{ color: "red" }}>{errors.email.message}</p>}
             </div>
 
-            <input {...register("password")} type="password" autoComplete="password" placeholder="Enter Your Password" className="input px-4 py-6 w-full m-4"
-
+            <input {...register("password")} type="password" autoComplete="password" placeholder="Enter Your Password" className="input px-4 py-6 w-full m-4 focus:text-xl text-lg"
             />
             <div className="h-2">
               {errors.password && <p style={{ color: "red" }}>{errors.password.message}</p>}

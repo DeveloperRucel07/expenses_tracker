@@ -47,7 +47,6 @@ const SignUp = () => {
       if (data.displayName) {
         await updateProfile(userCredential.user, { displayName: data.displayName });
       }
-      console.log("User created:", userCredential.user.uid);
     } catch (err:any) {
       console.error("Sign up error:", err);
       const code = err?.code ?? err?.message ?? "";
@@ -57,16 +56,13 @@ const SignUp = () => {
     }
   }
 
-
-
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="pt-5 mt-6 max-w-[600px] mx-auto h-[600px] flex items-center justify-center flex-col p-2">
+    <form onSubmit={handleSubmit(onSubmit)} className="pt-5 mt-6 max-w-[600px] mx-auto h-[600px] flex items-center justify-center flex-col p-2 rounded-2xl shadow-lg">
         {serverError && <p style={{ color: "red" }}>{serverError}</p>}
         <h1 className="px-6 py-6 text-semibold text-5xl underline uppercase ">Sign Up</h1>
     
         <div className="flex items-center justify-center flex-col gap-2 w-full">
-            <input type="text" placeholder="Name" className="input px-4 py-6 w-full m-4 "
+            <input type="text" placeholder="Name" className="input px-4 py-6 w-full m-4 focus:text-xl text-lg"
               {...register("displayName", {
                 required: true
               })}
@@ -75,19 +71,19 @@ const SignUp = () => {
             <div className="h-2">
               {errors.displayName && <p style={{ color: "red" }}>{errors.displayName.message}</p>}
             </div>
-            <input {...register("email")} type="email" autoComplete="email" placeholder="Email" className="input px-4 py-6 w-full m-4 "
+            <input {...register("email")} type="email" autoComplete="email" placeholder="Email" className="input px-4 py-6 w-full m-4 focus:text-xl text-lg"
             
             />
             <div className="h-2">
               {errors.email && <p style={{ color: "red" }}>{errors.email.message}</p>}
             </div>
-            <input {...register("password")} type="password" autoComplete="new-password" placeholder="Password" className="input px-4 py-6 w-full m-4"
+            <input {...register("password")} type="password" autoComplete="new-password" placeholder="Password" className="input px-4 py-6 w-full m-4 focus:text-xl text-lg"
 
             />
             <div className="h-2">
               {errors.password && <p style={{ color: "red" }}>{errors.password.message}</p>}
             </div>
-            <input {...register("confirmPassword")} type="password" autoComplete="new-password" placeholder="confirm Password" className="input px-4 py-6 w-full m-4"
+            <input {...register("confirmPassword")} type="password" autoComplete="new-password" placeholder="confirm Password" className="input px-4 py-6 w-full m-4 focus:text-xl text-lg"
 
             />
             <div className="h-2">

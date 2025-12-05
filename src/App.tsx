@@ -19,7 +19,7 @@ function App() {
  
   return (
     <>
-      <Header user = {user!} logout={handleLogout} ></Header>
+      <Header user = {user!} logout={handleLogout}></Header>
       <main>
         <Routes>
           <Route path="/" element = {<Home></Home>}></Route>

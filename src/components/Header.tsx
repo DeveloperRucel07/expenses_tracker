@@ -1,5 +1,5 @@
 import {type User } from "firebase/auth";
-import { SquareArrowRight } from "lucide-react"
+import { SquareArrowRight, Wallet } from "lucide-react"
 type userProps ={
   user: User,
   logout: (user: User) => void; 
@@ -7,8 +7,8 @@ type userProps ={
 
 const Header = ({ user, logout }: userProps) => {
   return (
-    <header className="flex flex-row justify-between items-center h-[60px] shadow-[0_8px_16px_-4px_rgba(0,0,0,0.15)] px-2 py-4">
-        <h3 className="text-info text-extrabold text-3xl">Expense Track</h3>
+    <header className="flex flex-row justify-between items-center h-[60px] shadow-[0_8px_16px_-4px_rgba(0,0,0,0.15)] px-2 py-4 fixed top-0 left-0 right-0 z-10 mx-auto bg-secondary-content max-w-[1920px]">
+        <h3 className="text-info text-extrabold text-3xl flex items-center"><Wallet className="w-10 h-10" /> Track</h3>
         <nav className="">
           <ul className="flex flex-row gap-2">
               <li className="text-xl p-4 text-hover-primary"><a href="/">Home</a></li>
