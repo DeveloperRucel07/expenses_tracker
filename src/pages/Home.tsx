@@ -5,7 +5,6 @@ import { PieChart, Wallet, BarChart3 } from "lucide-react";
 const Home = () => {
   return (
     <div className="w-full">
-      {/* HERO SECTION */}
       <section className="bg-primary py-24 px-6 text-center">
         <motion.h1
           className="text-5xl font-extrabold text-info mb-6"
@@ -33,7 +32,7 @@ const Home = () => {
           transition={{ delay: 0.3 }}
         >
           <Link
-            to="/sign-up"
+            to="/dashboard"
             className="px-6 py-3 bg-primary font-extrabold text-white rounded-xl shadow-md hover:bg-accent transition"
           >
             Get Started
@@ -97,7 +96,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* DEMO SECTION */}
       <section className="py-20 bg-gray-50 px-6 text-center">
         <h2 className="text-3xl font-bold mb-8">A Simple, Clean Dashboard</h2>
 
@@ -106,12 +104,11 @@ const Home = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
         >
-          {/* Placeholder for dashboard preview */}
           Dashboard preview coming soon…
         </motion.div>
 
         <Link
-          to="/sign-up"
+          to="/dashboard"
           className="mt-10 inline-block px-8 py-3 bg-primary text-white rounded-xl shadow hover:bg-info font-extrabold transition"
         >
           Start Tracking Now

@@ -1,31 +1,32 @@
-import { Route, Routes, useNavigate } from "react-router-dom"
+import { Route, Routes} from "react-router-dom"
 import Header from "./components/Header"
 import Login from "./pages/Login"
 import Home from "./pages/Home"
 import SignUp from "./pages/SignUp"
 import Dashboard from "./pages/Dashboard"
-import { useState } from "react"
-import { signOut } from "firebase/auth"
+import type { User } from "firebase/auth"
+import { useEffect, useState } from "react"
 import { auth } from "./database/config"
 
 function App() {
-  const [user, setUser] = useState(null);
-  const navigate = useNavigate();
-  const  handleLogout = async () => {
-    await signOut(auth);
-    setUser(null);
-    navigate("/");
-  };
+
+  const [user, setUser] =  useState<User | null>(null);
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      setUser(user);
+    })
+  })
  
   return (
     <>
-      <Header user = {user!} logout={handleLogout}></Header>
+      <Header></Header>
       <main>
         <Routes>
           <Route path="/" element = {<Home></Home>}></Route>
-          <Route path="/login" element = {<Login onLogin={setUser}></Login>}></Route>
-          <Route path="/sign-up" element = {<SignUp></SignUp>}></Route>
-          <Route path="/dashboard" element = {<Dashboard user={user}></Dashboard>}></Route>
+          <Route path="/login" element = { user ? <Dashboard></Dashboard> : <Login></Login> }></Route>
+          <Route path="/sign-up" element = {user ? <Dashboard></Dashboard> : <SignUp></SignUp>}></Route>
+          <Route path="/dashboard" element = {<Dashboard></Dashboard>}></Route>
         </Routes>
       </main>
     </>

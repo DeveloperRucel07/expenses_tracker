@@ -2,7 +2,7 @@ import { useState } from "react";
 import { signUpSchema, type SignUpInput } from "../database/auth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
 import { auth } from "../database/config";
 
 

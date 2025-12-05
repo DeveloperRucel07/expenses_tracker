@@ -7,7 +7,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-export default function Login({ onLogin }) {
+export default function Login() {
+
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -25,9 +26,7 @@ export default function Login({ onLogin }) {
 
     async function loginUser(email:string, password:string){
       try {
-        const cred = await signInWithEmailAndPassword(auth, email, password);
-        const currentUser = cred.user;
-        onLogin(currentUser);
+        await signInWithEmailAndPassword(auth, email, password);
         navigate("/dashboard") 
       }catch (error) {
         if(error){
