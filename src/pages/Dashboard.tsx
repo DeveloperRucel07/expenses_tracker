@@ -8,7 +8,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from "recharts";
 import { auth, database } from "../database/config";
@@ -16,6 +16,20 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { motion } from "framer-motion";
 import { ChartNoAxesCombined, ChartColumnDecreasing } from "lucide-react";
+import { PieChartWithCustomizedLabel } from "../components/ChartLabel";
+
+
+const usePieDataFromTransactions = (transactions: Transaction[]) =>
+   useMemo(() => {
+     const map = new Map<string, number>();
+     transactions
+       .filter((t) => t.type === "expense")
+       .forEach((t) => {
+         const name = t.category ?? "Other";
+         map.set(name, (map.get(name) ?? 0) + t.amount);
+       });
+     return Array.from(map.entries()).map(([name, value]) => ({ name, value }));
+}, [transactions]);
 
 type ExpenseFormData = {
   category: string;
@@ -28,7 +42,7 @@ type IncomeData = {
   date: number;
 };
 
-type Transaction = {
+export type Transaction = {
   type: "income" | "expense";
   amount: number;
   date: number;
@@ -60,7 +74,7 @@ const Dashboard = () => {
   const [income, setIncome] = useState<number>(0);
   const [totalExpenses, setTotalExpenses] = useState<number>(0);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-
+  const pieData = usePieDataFromTransactions(transactions);
   useEffect(() => {
     const unsubscribeAuth = auth.onAuthStateChanged((user) => {
       setUser(user);
@@ -412,17 +426,20 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              <LineChart
+              <div className="flex justify-center items-center">
+                 <LineChart
                 style={{ width: "100%", aspectRatio: 1.618, maxWidth: 700 }}
                 responsive
                 data={data}
-              >
+                  >
                 <CartesianGrid />
                 <Line type="monotone" dataKey="amount" stroke="#8884d8" />
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Legend />
-              </LineChart>
+                </LineChart>
+                {pieData.length > 0 && <PieChartWithCustomizedLabel pieData={pieData} />}
+              </div>
             </section>
           </div>
           {transactions.length === 0 ? (
